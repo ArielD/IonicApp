@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="currentUser; else unauthorized">
+    <ion-row align-items-center>
+      <ion-col size="4">
+          <img class="avatar avatar-big" [src]='apiURL + "users/uploads/avatars/" + currentUser._id'>
+      </ion-col>
+      <ion-col size="6">
+        Hello, {{currentUser.username}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <mat-action-list>
+          <button mat-list-item>
+            <ion-icon slot="strat" margin name="list-box"></ion-icon> My orders
+          </button>
+          <button mat-list-item>
+            <ion-icon slot="strat" margin name="notifications"></ion-icon> Notifications
+          </button>
+
+          <button mat-list-item>
+            <ion-icon slot="strat" margin name="pricetag"></ion-icon> Promo code
+          </button>
+          <button mat-list-item>
+            <ion-icon slot="strat" margin name="pin"></ion-icon> My addresses
+          </button>
+          <button mat-list-item>
+            <ion-icon slot="strat" margin name="card"></ion-icon> My cards
+          </button>
+          <button mat-list-item>
+            <ion-icon slot="strat" margin name="text"></ion-icon> Contact us
+          </button>
+          <button mat-list-item>
+            <ion-icon slot="strat" margin name="bug"></ion-icon> Report an error
+          </button>
+          <button mat-list-item (click)="navigateToAdminPanel()" *ngIf="isAdmin">
+            <ion-icon slot="strat" margin name="hammer"></ion-icon> Admin panel
+          </button>
+          <button mat-list-item (click)="signOut()">
+            <ion-icon slot="strat" margin name="text"></ion-icon> Sign Out
+          </button>
+        </mat-action-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ng-template #unauthorized>
+    <div margin>
+      Please, <a href=""  routerLink="../../../auth/signup">SignUp</a> or <a href=""  routerLink="../../../auth/signin">SignIn</a>.
+    </div>
+  </ng-template>
+</ion-content>
