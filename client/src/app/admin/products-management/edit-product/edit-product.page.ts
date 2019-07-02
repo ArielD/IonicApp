@@ -37,8 +37,8 @@ export class EditProductPage implements OnInit {
 
   public updateProduct() {
     this.productsService.updateProduct(this.product).subscribe();
-    this.productsService.setUpdatedProduct(this.product);
     this.productsService.uploadImage(this.productImage, this.productId).subscribe();
+    this.productsService.setUpdatedProduct(this.product);
     this.navigateBack();
   }
 
