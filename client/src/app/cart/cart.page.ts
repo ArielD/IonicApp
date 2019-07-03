@@ -22,7 +22,9 @@ export class CartPage implements OnInit {
     private alertCtrl: AlertController
     
   ) {
-    this.localCart = JSON.parse(localStorage.getItem('cart'));
+   // this.localCart = JSON.parse(localStorage.getItem('cart'));
+
+   this.localCart = this.cartService.getCartValue();
 
     if (this.localCart) {
       this.currentProductCart = [];

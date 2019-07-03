@@ -39,6 +39,7 @@ export class EditProductPage implements OnInit {
     this.productsService.updateProduct(this.product).subscribe();
     this.productsService.uploadImage(this.productImage, this.productId).subscribe();
     this.productsService.setUpdatedProduct(this.product);
+    this.getImage();
     this.navigateBack();
   }
 
@@ -50,5 +51,9 @@ export class EditProductPage implements OnInit {
       reader.readAsDataURL(file);
     }
     this.productImage = event.target.files[0];
+  }
+
+  public getImage(): string {
+    return this.apiURL + "products/uploads/" + this.productId;
   }
 }

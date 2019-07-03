@@ -46,7 +46,6 @@ export class FavoritesPage implements OnInit {
   }
 
   public addToFavorites(item: ProductModel, event: Event) {
-    debugger
     item.isFavorite = !item.isFavorite;
     event.stopPropagation();
 
@@ -56,7 +55,6 @@ export class FavoritesPage implements OnInit {
 
     if (!item.isFavorite) {
       this.currentUser.favorites = this.currentUser.favorites.filter((x) => {
-        debugger
         return x !== item._id;
       })
     }

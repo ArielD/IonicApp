@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { UserModel } from 'src/app/shared/models/user.model';
 import { UsersService } from 'src/app/shared/services/users.service';
@@ -18,7 +18,6 @@ export class EditUserPage implements OnInit {
   public previewImage;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private usersServices: UsersService,
     public navCtrl: NavController

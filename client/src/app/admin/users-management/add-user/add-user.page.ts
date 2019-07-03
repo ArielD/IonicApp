@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from 'src/app/shared/models/user.model';
-import { Router } from '@angular/router';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-user',
@@ -19,9 +19,9 @@ export class AddUserPage implements OnInit {
   public user: UserModel = new UserModel();
 
   constructor(
-    private router: Router,
     private usersService: UsersService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -36,18 +36,18 @@ export class AddUserPage implements OnInit {
   }
 
   public navigateBack() {
-    this.router.navigate(['admin/users-management/list-users']);
+    this.navCtrl.navigateRoot(['admin/users-management/list-users']);
   }
 
-  public uploadImage(event) {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = e => this.previewAvatar = reader.result;
-      reader.readAsDataURL(file);
-    }
-    this.userAvatar = event.target.files[0];
-  }
+  // public uploadImage(event) {
+  //   if (event.target.files && event.target.files[0]) {
+  //     const file = event.target.files[0];
+  //     const reader = new FileReader();
+  //     reader.onload = e => this.previewAvatar = reader.result;
+  //     reader.readAsDataURL(file);
+  //   }
+  //   this.userAvatar = event.target.files[0];
+  // }
 
   public createUser() {
     this.submitted = true;
@@ -56,9 +56,11 @@ export class AddUserPage implements OnInit {
     }
 
     this.usersService.createUser(this.addForm.value).subscribe();
-    if (this.previewAvatar) {
-      this.usersService.uploadImage(this.userAvatar, this.user._id).subscribe();
-    }
+    // if (this.previewAvatar) {
+    //   this.usersService.uploadImage(this.userAvatar, this.user._id).subscribe();
+    // }
+    
+    this.usersService.setAddedUser(this.addForm.value);
     this.navigateBack();
   }
 }

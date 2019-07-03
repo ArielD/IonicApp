@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { CartModel, LocalStorageCartModel } from '../models/cart.model';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { CartModel, LocalStorageCartModel } from '../models/cart.model';
 })
 export class CartService {
   private apiURL = environment.apiTest;
+  private currentCart: BehaviorSubject<LocalStorageCartModel[]> = new BehaviorSubject<LocalStorageCartModel[]>(null);
 
   constructor(
     private http: HttpClient
@@ -28,6 +29,7 @@ export class CartService {
       currentCart[index] = item;
     }
     localStorage.setItem('cart', JSON.stringify(currentCart))
+    this.currentCart.next(currentCart)
   }
 
   removeProduct(id: string): void {
@@ -43,9 +45,16 @@ export class CartService {
     } else {
       localStorage.removeItem('cart')
     }
+
+    this.currentCart.next(currentCart)
   }
 
   cleanCart(): void {
     localStorage.removeItem('cart');
+    this.currentCart.next(null)
+  }
+
+  public getCartValue() {
+    return this.currentCart.getValue();
   }
 }

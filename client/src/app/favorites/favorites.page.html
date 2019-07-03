@@ -10,12 +10,12 @@
 <ion-content>
   <div class="product-grid" *ngIf="favoritesProducts">
     <ion-card *ngFor="let item of favoritesProducts" (click)="navigateToDetails(item._id)">
-      <!-- <ion-fab vertical="top" horizontal="end" slot="fixed"> -->
-        <button (click)="addToFavorites(item, $event)">
+      <ion-fab vertical="top" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="addToFavorites(item, $event)">
           <ion-icon *ngIf="!item.isFavorite" name="heart-empty"></ion-icon>
           <ion-icon *ngIf="item.isFavorite" name="heart"></ion-icon>
-        </button>
-      <!-- </ion-fab> -->
+        </ion-fab-button>
+      </ion-fab>
       <ion-card-title>
         <ion-img class="product-img" [src]='apiURL + "products/uploads/" + item._id'></ion-img>
       </ion-card-title>

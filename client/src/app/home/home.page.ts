@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../shared/services/products.service';
 import { ProductModel } from '../shared/models/products.model';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -14,13 +14,21 @@ export class HomePage implements OnInit {
   public apiURL = environment.apiTest; 
   public products: ProductModel[];
   public serchText: string;
+  public updatedProduct: ProductModel;
 
   constructor(
     private productsService: ProductsService,
-    private router: Router
+    private navCtrl: NavController
   ) {
+    if (this.productsService.getUpdatedProduct()) {
+      this.updatedProduct = this.productsService.getUpdatedProduct()
+    }
+
     this.productsService.getAll().subscribe((x) => {
       this.products = x;
+      if (this.productsService.getUpdatedProduct()) {
+
+      }
     })
    }
 
@@ -38,6 +46,6 @@ export class HomePage implements OnInit {
   }
 
   public navigateToDetails(id: string) {
-    this.router.navigate(['tabs/product-details', id])
+    this.navCtrl.navigateRoot(['tabs/product-details', id])
   }
 }

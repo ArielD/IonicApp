@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from 'src/app/shared/models/user.model';
 import { UsersService } from 'src/app/shared/services/users.service';
-import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 
 @Component({
@@ -16,19 +15,24 @@ export class ListUsersPage implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private router: Router,
     private alertCtrl: AlertController,
     public navCtrl: NavController
-  ) { 
+  ) {
     if (this.usersService.getUpdatedUser()) {
       this.updatedUser = this.usersService.getUpdatedUser()
     }
+
     this.usersService.getAll().subscribe((x) => {
       this.users = x;
-      for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i]._id == this.updatedUser._id) {
-          this.users[i] = this.updatedUser;
+      if (this.updatedUser) {
+        for (let i = 0; i < this.users.length; i++) {
+          if (this.users[i]._id == this.updatedUser._id) {
+            this.users[i] = this.updatedUser;
+          }
         }
+      }
+      if (this.usersService.getAddedUser()) {
+        this.users.push(this.usersService.getAddedUser())
       }
     })
   }
@@ -51,6 +55,9 @@ export class ListUsersPage implements OnInit {
         text: 'Delete',
         handler: () => {
           this.usersService.deleteUser(id).subscribe();
+          this.usersService.getAll().subscribe((x) => {
+            this.users = x;
+          })
         }
       }]
     })

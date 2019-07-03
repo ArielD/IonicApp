@@ -25,7 +25,6 @@ export class ListProductsPage implements OnInit {
     }
 
     this.getAllProducts().then(data => {
-      debugger
       this.products = data;
       if (this.updatedProduct) {
         for (let i = 0; i < this.products.length; i++) {

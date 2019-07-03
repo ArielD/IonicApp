@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -12,7 +12,8 @@ export class UsersManagementPage implements OnInit {
 
   constructor(
     private menu: MenuController,
-    private router: Router
+    private router: Router,
+    public navCtrl: NavController
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
@@ -33,6 +34,6 @@ export class UsersManagementPage implements OnInit {
   }
 
   public navigateToAddUser() {
-    this.router.navigate(['admin/add-user'])
+    this.navCtrl.navigateRoot(['admin/add-user'])
   }
 }

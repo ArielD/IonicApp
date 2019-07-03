@@ -10,7 +10,8 @@ import { UserModel } from '../models/user.model';
 })
 export class UsersService {
   private apiURL = environment.apiTest;
-  private currentUpdatedUser: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(new UserModel());
+  private currentUpdatedUser: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(null);
+  private currentAddedUser: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(null);
 
   constructor(
     private http: HttpClient
@@ -61,7 +62,16 @@ export class UsersService {
     return this.currentUpdatedUser.getValue();
   }
 
-  public setUpdatedUser(user): void {
+  public setUpdatedUser(user: UserModel): void {
     this.currentUpdatedUser.next(user);
   }
+
+  public getAddedUser(): UserModel {
+    return this.currentAddedUser.getValue();
+  }
+
+  public setAddedUser(user: UserModel): void {
+    this.currentAddedUser.next(user);
+  }
+
 }

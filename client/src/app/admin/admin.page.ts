@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterEvent } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-admin',
@@ -25,7 +26,8 @@ export class AdminPage implements OnInit {
   selectedPath = '';
 
   constructor(
-    private router: Router
+    private router: Router,
+    private navCtrl: NavController
   ) { 
     this.router.events.subscribe((event: RouterEvent) => {
       this.selectedPath = event.url;
@@ -35,8 +37,12 @@ export class AdminPage implements OnInit {
   ngOnInit() {
   }
 
-  navigateTo(url: string) {
-    this.router.navigate([url]);
+  public navigateTo(url: string): void {
+    this.navCtrl.navigateRoot([url]);
+  }
+
+  public goHome() {
+    this.navCtrl.navigateRoot(['tabs/home']);
   }
 
 }
